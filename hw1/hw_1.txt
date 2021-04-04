@@ -1,0 +1,26 @@
+1.
+Predecessor(x):NaturalNumber 
+::=
+if(x == 0) return 0;
+else return x-1
+
+IsGreater(x,y):Boolean
+::=
+if(x > y) return TRUE
+else return FALSE
+
+Multiply(x,y):NaturalNumber
+::=
+if((x * y) < MAXINT) return x * y
+else return MAXINT
+
+Divide(x,y):NaturalNumber
+::=
+if(y == 0) return ERROR
+else return x/y
+
+2.
+
+3.
+
+4.
