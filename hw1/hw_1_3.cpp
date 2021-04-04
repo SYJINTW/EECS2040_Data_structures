@@ -88,6 +88,7 @@ int main()
     char c[100];
     cin >> n >> c;
     String S(c, n);
+    cout << "String: ";
     S.Print();
 
     cout << "Start delete from?" << endl;
@@ -95,11 +96,27 @@ int main()
     cout << "Delete length?" << endl;
     cin >> l;
     S.Delete(d, l);
+    cout << "String: ";
     S.Print();
 
     cout << "Delete what char?" << endl;
     cin >> dc;
     String K;
     K = S.CharDelete(dc);
+    cout << "String: ";
     K.Print();  
 }
+
+/*
+Input1:
+10 abcabcabca
+5
+3
+a
+
+Input2:
+20 abcdefghijabcdefghij
+1
+5
+j
+*/

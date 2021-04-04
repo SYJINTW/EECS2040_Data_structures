@@ -9,44 +9,6 @@
 // 4. output
 //
 
-/*
-6 6 8
-0 0 15
-0 3 22
-0 5 -15
-1 1 11
-1 2 3
-2 3 -6
-4 0 91
-5 2 28
-
-6 6 8
-0 0 15
-0 4 91
-1 1 11
-2 1 3 
-2 5 28
-3 0 22
-3 2 -6
-5 0 -15
-
-3 3 6
-0 0 1
-0 1 2
-0 2 3
-2 0 4
-2 1 5
-2 2 6
-
-3 3 6
-0 0 7
-0 2 7
-1 0 8
-1 2 8
-2 0 9
-2 2 9
-*/
-
 #include <iostream>
 #include <iomanip>
 
@@ -57,7 +19,7 @@ class SparseMatrix;
 class MatrixTerm
 {
     friend class SparseMatrix;
-    private:
+    public:
     int row, col, value;
 };
 
@@ -67,13 +29,13 @@ class SparseMatrix
     SparseMatrix();
     SparseMatrix(int r, int c);
     SparseMatrix(int r, int c, int t);
-    void Insert();
     SparseMatrix Add(SparseMatrix b);
     SparseMatrix Mult(SparseMatrix b);
     SparseMatrix FastTranspose();
     void ChangeSize1D(const int newSize);
     void StoreSum(const int sum, const int r, const int c);
     friend ostream& operator<<(ostream& os, SparseMatrix& M);
+    friend istream & operator >> (istream &in, SparseMatrix &M);
     int search(int r, int c);
     private:
     int rows, cols, terms, capacity;
@@ -100,17 +62,6 @@ SparseMatrix::SparseMatrix(int r, int c, int t)
     capacity = t;
     smArray = new MatrixTerm[capacity];
 }
-
-void
-SparseMatrix::Insert()
-{
-    for(int i = 0; i < terms; i++)
-    {
-        cin >> smArray[i].row >> smArray[i].col >> smArray[i].value;
-    }
-}
-
-
 
 SparseMatrix
 SparseMatrix::Add(SparseMatrix b)
@@ -172,7 +123,7 @@ SparseMatrix::Mult(SparseMatrix b)
     SparseMatrix d(rows, b.cols, 0);
     int currRowIndex = 0,
         currRowBegin = 0,
-        currRowA = smArray[0].row;
+    currRowA = smArray[0].row;
     
     if (terms == capacity) ChangeSize1D(terms+1);
     bXpose.ChangeSize1D(bXpose.terms+1);
@@ -197,29 +148,29 @@ SparseMatrix::Mult(SparseMatrix b)
                 currColB = bXpose.smArray[currColIndex].row;
             }
             else if (bXpose.smArray[currColIndex].row != currColB)
-            {//b中第currColB行的結尾
+            { // b中第currColB行的結尾
                 d.StoreSum(sum, currRowA, currColB);
-                sum = 0; //重設
-                //第currRowA列改成與下一行相乘
+                sum = 0; // 重設
+                // 第currRowA列改成與下一行相乘
                 currRowIndex = currRowBegin;
                 currColB = bXpose.smArray[currColIndex].row;
             }
             else
                 if (smArray[currRowIndex].col < bXpose.smArray[currColIndex].col) currRowIndex++;
                 else if (smArray[currRowIndex].col ==bXpose.smArray[currColIndex].col)
-                {//加到sum裡
+                { // 加到sum裡
                     sum+=smArray[currRowIndex].value*
                         bXpose.smArray[currColIndex].value;
                     currRowIndex++;
                     currColIndex++;
                 }
                 else currColIndex++; // currColB的下一項
-        } //while (currColIndex<= b.terms)結束
+        } // while (currColIndex<= b.terms)結束
         while(smArray[currRowIndex].row == currRowA) // 前進至下一列
             currRowIndex++;
         currRowBegin = currRowIndex;
         currRowA = smArray[currRowIndex].row;
-    }//while (currRowIndex<terms)結束
+    } // while (currRowIndex<terms)結束
     return d;   
 }
 
@@ -298,6 +249,15 @@ ostream& operator<<(ostream& os, SparseMatrix& M)
     return os;
 }
 
+istream & operator >> (istream &in, SparseMatrix &M)
+{
+    for(int i = 0; i < M.terms; i++)
+    {
+        in >> M.smArray[i].row >> M.smArray[i].col >> M.smArray[i].value;
+    }
+    return in;
+}
+
 
 int main()
 {
@@ -305,7 +265,7 @@ int main()
     cout << "A:" << endl;
     cin >> rows >> cols >> terms;
     SparseMatrix A(rows, cols, terms);
-    A.Insert();
+    cin >> A;
 
     cout << "Matrix A" << endl;
     cout << A << endl;
@@ -313,28 +273,72 @@ int main()
     cout << "B:" << endl;
     cin >> rows >> cols >> terms;
     SparseMatrix B(rows, cols, terms);
-    B.Insert();
+    cin >> B;
 
     cout << "Matrix B" << endl;
     cout << B << endl;
     
-//    SparseMatrix C; 
-//    C = A.Add(B);
+    SparseMatrix C; 
+    C = A.Add(B);
     
-//    cout << "A + B" << endl;
-//    cout << C << endl;
+    cout << "A + B" << endl;
+    cout << C << endl;
 
+    /*
     SparseMatrix D; 
     D = A.FastTranspose();
     
     cout << "T(A)" << endl;
     cout << D << endl;
-    
+    */
+
     SparseMatrix E; 
     E = A.Mult(B);
 
     cout << "A * B" << endl;
     cout << E << endl;
-
 }
 
+
+/*
+Input1:
+
+6 6 8
+0 0 15
+0 3 22
+0 5 -15
+1 1 11
+1 2 3
+2 3 -6
+4 0 91
+5 2 28
+
+6 6 8
+0 0 15
+0 4 91
+1 1 11
+2 1 3 
+2 5 28
+3 0 22
+3 2 -6
+5 0 -15
+
+
+Input2:
+
+3 3 6
+0 0 1
+0 1 2
+0 2 3
+2 0 4
+2 1 5
+2 2 6
+
+3 3 6
+0 0 7
+0 2 7
+1 0 8
+1 2 8
+2 0 9
+2 2 9
+*/
