@@ -20,7 +20,9 @@ class Polynomial;
 class Term
 {
     friend Polynomial;
-    public:
+    friend ostream& operator<<(ostream& os, Polynomial& a);
+    friend istream& operator>>(istream &in, Polynomial& a);
+    private:
     float coef;
     int exp;
 };
@@ -38,6 +40,7 @@ class Polynomial
     float Eval(float x);
 
     friend ostream& operator<<(ostream& os, Polynomial& a);
+    friend istream& operator>>(istream &in, Polynomial& a);
 
     void NewTerm(const float ncoef, const int nexp);
 
@@ -56,6 +59,8 @@ Polynomial::Polynomial()
     terms = 0;
 }
 
+
+
 Polynomial::Polynomial(float* coefList, int* expList, int t)
 {
     terms = 0;
@@ -63,7 +68,6 @@ Polynomial::Polynomial(float* coefList, int* expList, int t)
     termArray = new Term[capacity];
     for(int i = 0; i < t; i++){
         NewTerm(coefList[i], expList[i]);
-        terms++;
     }
 }
 
@@ -75,7 +79,7 @@ Polynomial::NewTerm(const float ncoef, const int nexp)
     // termArray is full -> double capacity -> create new termArray with new capacity -> copy
     if(terms == capacity)
     {
-        capacity *= 2;
+        capacity = capacity * 2;
         Term *temp = new Term[capacity];
         std::copy(termArray, termArray+terms, temp);
         delete [] termArray;
@@ -96,7 +100,7 @@ Polynomial::Add(Polynomial b)
     {
         if(termArray[aPos].exp == b.termArray[bPos].exp)
         {
-            float t = termArray[aPos].coef + termArray[bPos].coef;
+            float t = termArray[aPos].coef + b.termArray[bPos].coef;
             if(t) c.NewTerm(t, termArray[aPos].exp);
             aPos++;
             bPos++;
@@ -118,7 +122,7 @@ Polynomial::Add(Polynomial b)
         c.NewTerm(termArray[aPos].coef, termArray[aPos].exp);
 
     // add the last b
-    for(;bPos < terms; bPos++)
+    for(;bPos < b.terms; bPos++)
         c.NewTerm(b.termArray[bPos].coef, b.termArray[bPos].exp);
     
     return c;
@@ -128,19 +132,15 @@ Polynomial
 Polynomial::Mult(Polynomial b)
 {
     Polynomial c;
-    Polynomial *temp;
-    int aPos = 0;
-    int bPos = 0;
-    for(; aPos < terms; aPos++)
+    for(int aPos = 0; aPos < terms; aPos++)
     {
-        temp = new Polynomial();
-        for(; bPos < terms; bPos++)
+        Polynomial temp;
+        for(int bPos = 0; bPos < b.terms; bPos++)
         {
-            if(termArray[aPos].coef * b.termArray[bPos].coef)
-                (*temp).NewTerm(termArray[aPos].coef * b.termArray[bPos].coef, termArray[aPos].exp + b.termArray[bPos].exp);
+            temp.NewTerm(termArray[aPos].coef * b.termArray[bPos].coef, termArray[aPos].exp + b.termArray[bPos].exp);
         }
-        c.Add(*temp);
-        delete [] temp;
+        c = temp.Add(c);
+        //cout << termArray[aPos].coef << " * " << b << " = " << temp << endl;
     }
     return c;
 }
@@ -159,9 +159,9 @@ Polynomial::Eval(float k)
 
 ostream& operator<<(ostream& os, Polynomial& a)
 {
-    for(int aPos = 0; aPos < a.terms; aPos++)
+    for(int aPos = a.terms-1; aPos >= 0; aPos--)
     {
-        if(a.termArray[aPos].coef >= 0 && aPos != 0)
+        if(a.termArray[aPos].coef > 0 && aPos != a.terms-1)
             os << "+" << a.termArray[aPos].coef << "x^" << a.termArray[aPos].exp;
         else
             os << a.termArray[aPos].coef << "x^" << a.termArray[aPos].exp;
@@ -169,40 +169,69 @@ ostream& operator<<(ostream& os, Polynomial& a)
     return os;
 }
 
+istream& operator>>(istream& in, Polynomial& a)
+{
+    int t, e, i;
+    float c;
+    cout << "How many terms: ";
+    in >> t;
+
+    float cl[t]; // list to store coef
+    int el[t]; // list to store exp
+
+    i = 0;
+    while(i < t)
+    {
+        cout << "The " << i+1 << " term: ";
+        in >> c >> e;
+        // check if the coef is 0 or not
+        if(c == 0)
+            cout << "Enter again. The coef can't be 0." << endl;
+        else
+        {
+            cl[i] = c;
+            el[i] = e;
+            i++;
+        }
+    }
+    a = Polynomial(cl, el, t);
+    return in;
+}
+
 
 
 
 
 int main()
-{
-    int aterms, bterms;
-    float acoef[100];
-    float bcoef[100];
-    int aexp[100];
-    int bexp[100];
-    
-    cout << "How many terms in A?\n";
-    cin >> aterms;
-    cout << "Input A's coef exp\n";
-    for(int i = 0; i < aterms; i++)
-        cin >> acoef[i] >> aexp[i];
-    Polynomial A(acoef, aexp, aterms);
+{    
+    Polynomial A;
+    Polynomial B;
 
-    
-    cout << "How many terms in B?\n";
-    cin >> bterms;
-    cout << "Input B's coef exp\n";
-    for(int i = 0; i < bterms; i++)
-        cin >> bcoef[i] >> bexp[i];
-    Polynomial B(bcoef, bexp, bterms);
+    cout << "Input poly A\n";
+    cin >> A;
+    cout << "Input poly B\n";
+    cin >> B;
 
+    cout << "Onput poly A\n";
     cout << A << endl;
+    cout << "Onput poly B\n";
     cout << B << endl;
+
+    cout << "A + B\n";
     Polynomial C; 
-    C = A.Add(B);
+    C = A.Add(B);    
     cout << C << endl;
-    Polynomial D;
-    D = A.Mult(B);
-    cout << D << endl;
+    
+    cout << "A * B\n";
+    C = A.Mult(B);
+    cout << C << endl;
+
+    float x, ea, eb;
+    cout << "x = ";
+    cin >> x;
+    ea = A.Eval(x);
+    cout << "A(" << x << ") = " << ea << endl;
+    eb = B.Eval(x);
+    cout << "B(" << x << ") = " << eb << endl;
     return 0;
 }
