@@ -34,9 +34,7 @@ class Polynomial
     Polynomial(float* coefList, int* expList, int t);
 
     Polynomial Add(Polynomial b);
-
     Polynomial Mult(Polynomial b);
-
     float Eval(float x);
 
     friend ostream& operator<<(ostream& os, Polynomial& a);
@@ -50,16 +48,12 @@ class Polynomial
     int terms; // number of nonzero terms
 };
 
-
-
 Polynomial::Polynomial()
 {
     capacity = 1;
     termArray = new Term[capacity];
     terms = 0;
 }
-
-
 
 Polynomial::Polynomial(float* coefList, int* expList, int t)
 {
@@ -70,8 +64,6 @@ Polynomial::Polynomial(float* coefList, int* expList, int t)
         NewTerm(coefList[i], expList[i]);
     }
 }
-
-
 
 void
 Polynomial::NewTerm(const float ncoef, const int nexp)
@@ -199,9 +191,6 @@ istream& operator>>(istream& in, Polynomial& a)
 }
 
 
-
-
-
 int main()
 {    
     Polynomial A;
@@ -233,5 +222,6 @@ int main()
     cout << "A(" << x << ") = " << ea << endl;
     eb = B.Eval(x);
     cout << "B(" << x << ") = " << eb << endl;
+    
     return 0;
 }

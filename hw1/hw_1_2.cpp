@@ -227,28 +227,30 @@ SparseMatrix::StoreSum(const int sum, const int r, const int c)
 int
 SparseMatrix::search(int r, int c)
 {
-    int result = 0;
     for(int i = 0; i < terms; i++)
     {
         if(smArray[i].row == r && smArray[i].col == c)
             return smArray[i].value;
     }
-    return result;
+    return 0;
 }
 
+// for output matrix
 ostream& operator<<(ostream& os, SparseMatrix& M)
 {
     for(int r = 0; r < M.rows; r++)
     {
         for(int c = 0; c < M.cols; c++)
         {
+            // print the value
             os << setw(4) << M.search(r,c) << " ";
         }
-        cout << endl;
+        os << endl;
     }
     return os;
 }
 
+// for input matrix
 istream & operator >> (istream &in, SparseMatrix &M)
 {
     for(int i = 0; i < M.terms; i++)
