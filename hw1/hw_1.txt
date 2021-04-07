@@ -22,5 +22,8 @@ else return x/y
 2.
 
 3.
+(a) Introduce statements to increment count at all appropriate points and compute the count
+(b)	Simplify the resulting program by eliminating statement and compute the count
+(c)	Obtain the step count for the function using the frequency method.
 
 4.

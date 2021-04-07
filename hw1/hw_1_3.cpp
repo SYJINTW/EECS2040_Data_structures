@@ -16,14 +16,21 @@ class String
     String();
     String(int m);
     String(char* init, int m);
-    int Length();
+
+    String Concat(const String &t);
+    String Substr(int i, int j);
     void Delete(int start, int length);
     String CharDelete(char c);
+    
+    int Length();
     void Print();
+    int FastFind(String pat);
+    void FailureFunction();
     
     private:
-    char* charTerm;
     int myLength;
+    char* charTerm;
+    int* failureList;
 };
 
 String::String()
@@ -45,6 +52,8 @@ String::String(char* init, int m)
         charTerm[i] = init[i];
     }
     myLength = m;
+    failureList = new int[m];
+    FailureFunction();
 }
 
 void
@@ -66,19 +75,60 @@ String::Delete(int start, int length)
 String
 String::CharDelete(char c)
 {
-    String temp;
+    char temp[myLength];
+    int tmpPos = 0;
     for(int i = 0; i < myLength; i++)
     {
         if(charTerm[i] != c)
-            temp.charTerm[temp.myLength++] = charTerm[i];
+            temp[tmpPos++] = charTerm[i];
     }
-    return temp;
+    String result(temp, tmpPos+1); 
+    return result;
 }
 
 void
 String::Print()
 {
-    cout << charTerm << endl;
+    cout << "String: " << charTerm << endl;
+}
+
+void
+String::FailureFunction() {
+    int l = Length();
+    failureList[0] = -1;
+    for (int i = 1; i < l; i++) {
+        int j = failureList[i - 1];
+        while ((*(charTerm + i) != *(charTerm + j + 1)) && (j >= 0))
+            j = failureList[j];
+        if (*(charTerm + i) == *(charTerm + j + 1))
+            failureList[i] = j + 1;
+        else
+            failureList[i] = -1;
+    }
+}
+
+String
+String::Substr(int i, int j) {
+    if (i + j >= Length()) throw invalid_argument("Out of string!!");
+    char *init = new char[j];
+    for (int k = 0; k < j; k++, i++)
+        init[k] = charTerm[i - 1];
+    String substr(init, j);
+    return substr;
+}
+
+int String::FastFind(String pat) {
+    int posP = 0, posS = 0;
+    int lengthP = pat.Length(), lengthS = Length();
+    while ((posP < lengthP) && (posS < lengthS)) {
+        if (pat.charTerm[posP] == charTerm[posS]) {
+            posP++;
+            posS++;
+        } else if (posP == 0) posS++;
+        else posP = pat.failureList[posP - 1] + 1;
+    }
+    if (posP < lengthP) return -1;
+    return posS - lengthP;
 }
 
 int main()
@@ -86,36 +136,44 @@ int main()
     int n, d, l;
     char dc;
     char c[100];
-    cin >> n >> c;
+    cout << "How many char are in the string: ";
+    cin >> n;
+    cout << "Input " << n << " char: ";
+    cin >> c;
     String S(c, n);
-    cout << "String: ";
     S.Print();
 
-    cout << "Start delete from?" << endl;
+    cout << "Start delete from: ";
     cin >> d;
-    cout << "Delete length?" << endl;
+    cout << "Delete length: ";
     cin >> l;
     S.Delete(d, l);
-    cout << "String: ";
     S.Print();
 
-    cout << "Delete what char?" << endl;
+    cout << "Delete which char: ";
     cin >> dc;
     String K;
     K = S.CharDelete(dc);
-    cout << "String: ";
     K.Print();  
+}
+
+int
+String::Length()
+{
+    return myLength;
 }
 
 /*
 Input1:
-10 abcabcabca
+10
+abcabcabca
 5
 3
 a
 
 Input2:
-20 abcdefghijabcdefghij
+20
+abcdefghijabcdefghij
 1
 5
 j
