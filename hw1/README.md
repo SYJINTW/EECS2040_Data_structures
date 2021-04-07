@@ -1,6 +1,6 @@
 <!-- TABLE OF CONTENTS -->
 <details open="open">
-  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+  <summary><h2 style="display: inline-block">DS Homework 1</h2></summary>
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
@@ -26,16 +26,12 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`github_username`, `repo_name`, `twitter_handle`, `email`, `project_title`, `project_description`
-
+This is the homwork of data structure.  
+Include two part, first part is answering the problem and second part is coding.
 
 ### Built With
 
-* []()
-* []()
-* []()
+* C++
 
 
 
@@ -47,32 +43,50 @@ To get a local copy up and running follow these simple steps.
 ### Installation
 
 1. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ```
+    ```zsh
+    git clone https://github.com/SYJINTW/EECS2040_Data_structures.git
+    ```
+
+2. Compile (for MacOS or Linux)
+    ```zsh
+    g++ -Wall -std=c++17 hw_1_1.cpp
+    ```
+
+    ```zsh
+    g++ -Wall -std=c++17 hw_1_2.cpp
+    ```
+
+    ```zsh
+    g++ -Wall -std=c++17 hw_1_3.cpp
+    ```
+
+3. Run
+    ```zsh
+    ./a.out
+    ```
 
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a list of proposed features (and known issues).
+Comming Soon
 
 <!-- RESULT -->
 ## Result
-show the result
 
-<!-- LICENSE -->
-## License
+1. hw_1_1 Polynomial
+  
+    <img src="https://github.com/SYJINTW/EECS2040_Data_structures/blob/master/hw1/src/hw_1_1.png?raw=true">
 
-Distributed under the MIT License. See `LICENSE` for more information.
+2. hw_1_2 Matrix
+   
+    <img src="https://github.com/SYJINTW/EECS2040_Data_structures/blob/master/hw1/src/hw_1_2_1.png?raw=true">
+    <img src="https://github.com/SYJINTW/EECS2040_Data_structures/blob/master/hw1/src/hw_1_2_2.png?raw=true">
 
+3. hw_1_3 String
+ 
+   <img src="https://github.com/SYJINTW/EECS2040_Data_structures/blob/master/hw1/src/hw_1_3.png?raw=true">
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 
-* []()
-* []()
-* []()
+* Fundamentals of Data Structures in C++
