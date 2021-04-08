@@ -26,7 +26,11 @@ class String
     void Print();
     int FastFind(String pat);
     void FailureFunction();
-    
+    void getstr();
+
+    bool operator==(String &t);
+    bool operator!();
+
     private:
     int myLength;
     char* charTerm;
@@ -131,49 +135,91 @@ int String::FastFind(String pat) {
     return posS - lengthP;
 }
 
-int main()
-{
-    int n, d, l;
-    char dc;
-    char c[100];
-    cout << "How many char are in the string: ";
-    cin >> n;
-    cout << "Input " << n << " char: ";
-    cin >> c;
-    String S(c, n);
-    S.Print();
-
-    cout << "Start delete from: ";
-    cin >> d;
-    cout << "Delete length: ";
-    cin >> l;
-    S.Delete(d, l);
-    S.Print();
-
-    cout << "Delete which char: ";
-    cin >> dc;
-    String K;
-    K = S.CharDelete(dc);
-    K.Print();  
-}
-
 int
 String::Length()
 {
     return myLength;
 }
 
+bool String::operator==(String &t) 
+{
+    if (Length() != t.Length()) return false;
+    for (int i = 0; i < Length(); i++) if (charTerm[i] != t.charTerm[i]) return false;
+    return true;
+}
+
+bool String::operator!() 
+{
+    if (Length() == 0) return true;
+    return false;
+}
+
+int main()
+{
+    int n, d, l;
+    char dc;
+    char c[100];
+    cout << "How many char are in the first string: ";
+    cin >> n;
+    cout << "Input " << n << " char: ";
+    cin >> c;
+    String S(c, n);
+    S.Print();
+    cout << "Length: " << S.Length() << endl;
+
+    cout << endl; // for format
+
+    cout << "How many char are in the second string: ";
+    cin >> n;
+    cout << "Input " << n << " char: ";
+    cin >> c;
+    String P(c, n);
+    S.Print();
+    cout << "Length: " << P.Length() << endl;
+
+    cout << endl; // for format
+    
+    if(S == P)
+        cout << "First and second string are the same." << endl;
+    else
+        cout << "First and second string are different." << endl;
+
+    cout << endl; // for format
+
+    cout << "Start delete first string from: ";
+    cin >> d;
+    cout << "Delete length: ";
+    cin >> l;
+    S.Delete(d, l);
+    S.Print();
+
+    cout << endl; // for format
+
+    cout << "Delete which char in first string: ";
+    cin >> dc;
+    String K;
+    K = S.CharDelete(dc);
+    K.Print();  
+
+}
+
+
+
 /*
 Input1:
-10
-abcabcabca
-5
-3
-a
+4
+abcd
+4
+abcd
+1
+2
+d
 
 Input2:
 20
 abcdefghijabcdefghij
+4
+abcd
 1
 5
 j

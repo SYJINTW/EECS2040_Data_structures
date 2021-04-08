@@ -8,12 +8,16 @@
 //
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <cmath>
 #include <vector>
 #include <tuple>
+#include <time.h>
 
 using namespace std;
+
+clock_t tstart, tend;
 
 class Polynomial;
 
@@ -22,6 +26,7 @@ class Term
     friend Polynomial;
     friend ostream& operator<<(ostream& os, Polynomial& a);
     friend istream& operator>>(istream &in, Polynomial& a);
+    
     private:
     float coef;
     int exp;
@@ -33,13 +38,13 @@ class Polynomial
     Polynomial();
     Polynomial(float* coefList, int* expList, int t);
 
-    Polynomial Add(Polynomial b);
-    Polynomial Mult(Polynomial b);
-    float Eval(float x);
+    Polynomial Add(Polynomial b); // add (*this) and b, then return a new poly
+    Polynomial Mult(Polynomial b); // multiply (*this) and b, then return a new poly
+    float Eval(float x); // bring a value into the poly
 
-    friend ostream& operator<<(ostream& os, Polynomial& a);
-    friend istream& operator>>(istream &in, Polynomial& a);
-
+    friend istream& operator>>(istream &in, Polynomial& a); // for poly input
+    friend ostream& operator<<(ostream& os, Polynomial& a); // for poly output
+    
     void NewTerm(const float ncoef, const int nexp);
 
     private:
@@ -148,19 +153,6 @@ Polynomial::Eval(float k)
     return result;
 }
 
-
-ostream& operator<<(ostream& os, Polynomial& a)
-{
-    for(int aPos = a.terms-1; aPos >= 0; aPos--)
-    {
-        if(a.termArray[aPos].coef > 0 && aPos != a.terms-1)
-            os << "+" << a.termArray[aPos].coef << "x^" << a.termArray[aPos].exp;
-        else
-            os << a.termArray[aPos].coef << "x^" << a.termArray[aPos].exp;
-    }
-    return os;
-}
-
 istream& operator>>(istream& in, Polynomial& a)
 {
     int t, e, i;
@@ -190,38 +182,72 @@ istream& operator>>(istream& in, Polynomial& a)
     return in;
 }
 
+ostream& operator<<(ostream& os, Polynomial& a)
+{
+    for(int aPos = a.terms-1; aPos >= 0; aPos--)
+    {
+        if(a.termArray[aPos].coef > 0 && aPos != a.terms-1)
+            os << "+" << a.termArray[aPos].coef << "x^" << a.termArray[aPos].exp;
+        else
+            os << a.termArray[aPos].coef << "x^" << a.termArray[aPos].exp;
+    }
+    return os;
+}
 
 int main()
 {    
     Polynomial A;
     Polynomial B;
-
+    float x, ea, eb;
+   
     cout << "Input poly A\n";
     cin >> A;
-    cout << "Input poly B\n";
-    cin >> B;
-
     cout << "Onput poly A\n";
     cout << A << endl;
+
+    cout << endl; // for format
+
+    cout << "Input poly B\n";
+    cin >> B;    
     cout << "Onput poly B\n";
     cout << B << endl;
 
-    cout << "A + B\n";
+    cout << endl; // for format
+
+    cout << "ADD:" << endl;
+    cout << "A + B = ";
     Polynomial C; 
     C = A.Add(B);    
     cout << C << endl;
-    
-    cout << "A * B\n";
-    C = A.Mult(B);
-    cout << C << endl;
 
-    float x, ea, eb;
+    cout << endl; // for format
+    
+    cout << "MULT:" << endl;
+    cout << "A * B = ";
+    tstart = clock(); // start calculate time
+    C = A.Mult(B);
+    tend = clock(); // end calculate time
+    cout << C << endl;
+    cout << "Time = " << (double)(tend - tstart)/CLOCKS_PER_SEC  << "sec" << endl; // print mult time
+
+    cout << endl; // for format
+
+    cout << "EVAL:" << endl;
     cout << "x = ";
     cin >> x;
+    tstart = clock(); // start calculate time
     ea = A.Eval(x);
+    tend = clock(); // end calculate time
     cout << "A(" << x << ") = " << ea << endl;
+    cout << "Time = " << (double)(tend - tstart)/CLOCKS_PER_SEC  << "sec" << endl; // print eval time
+
+    cout << endl; // for format
+
+    tstart = clock(); // start calculate time
     eb = B.Eval(x);
+    tend = clock(); // end calculate time
     cout << "B(" << x << ") = " << eb << endl;
+    cout << "Time = " << (double)(tend - tstart)/CLOCKS_PER_SEC  << "sec" << endl; // print eval time
     
     return 0;
 }

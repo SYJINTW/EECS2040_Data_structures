@@ -19,7 +19,10 @@ class SparseMatrix;
 class MatrixTerm
 {
     friend class SparseMatrix;
-    public:
+    friend ostream& operator<<(ostream& os, SparseMatrix& M);
+    friend istream & operator >> (istream &in, SparseMatrix &M);
+
+    private:
     int row, col, value;
 };
 
@@ -29,14 +32,18 @@ class SparseMatrix
     SparseMatrix();
     SparseMatrix(int r, int c);
     SparseMatrix(int r, int c, int t);
+
     SparseMatrix Add(SparseMatrix b);
     SparseMatrix Mult(SparseMatrix b);
     SparseMatrix FastTranspose();
+    
     void ChangeSize1D(const int newSize);
     void StoreSum(const int sum, const int r, const int c);
+    int search(int r, int c);
+    
     friend ostream& operator<<(ostream& os, SparseMatrix& M);
     friend istream & operator >> (istream &in, SparseMatrix &M);
-    int search(int r, int c);
+    
     private:
     int rows, cols, terms, capacity;
     MatrixTerm *smArray;
@@ -114,7 +121,6 @@ SparseMatrix::Add(SparseMatrix b)
     else throw "Incompatible matrices";
 }
 
-// BUG:
 SparseMatrix
 SparseMatrix::Mult(SparseMatrix b)
 {
