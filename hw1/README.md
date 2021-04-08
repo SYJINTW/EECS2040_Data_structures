@@ -85,8 +85,8 @@ Comming Soon
 
 3. hw_1_3 String
  
-   <img src="https://github.com/SYJINTW/EECS2040_Data_structures/blob/master/hw1/src/hw_1_3_1.png?raw=true"
-   <img src="https://github.com/SYJINTW/EECS2040_Data_structures/blob/master/hw1/src/hw_1_3_2.png?raw=true">>
+   <img src="https://github.com/SYJINTW/EECS2040_Data_structures/blob/master/hw1/src/hw_1_3_1.png?raw=true">
+   <img src="https://github.com/SYJINTW/EECS2040_Data_structures/blob/master/hw1/src/hw_1_3_2.png?raw=true">
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
