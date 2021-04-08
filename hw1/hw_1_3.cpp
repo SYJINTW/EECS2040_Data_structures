@@ -174,7 +174,7 @@ int main()
     cout << "Input " << n << " char: ";
     cin >> c;
     String P(c, n);
-    S.Print();
+    P.Print();
     cout << "Length: " << P.Length() << endl;
 
     cout << endl; // for format
