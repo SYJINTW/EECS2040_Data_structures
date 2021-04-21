@@ -59,8 +59,8 @@ Queue<T>::IsEmpty() const
 
 template <class T>
 void
-Queue<T>::Push(const T& x) 
-{// add x to stack
+Queue<T>::Push(const T& item) 
+{// add x to queue
     if ((rear + 1) % capacity == front) 
     {   
         T* newQu = new T[2*capacity];
@@ -78,7 +78,7 @@ Queue<T>::Push(const T& x)
         queue = newQu;
     }
     rear = (rear + 1) % capacity;  
-    queue[rear] = x;
+    queue[rear] = item;
 }
 
 
@@ -158,40 +158,41 @@ int main()
         flag = true;
         while(flag)
         {
+            cout << ">> ";
             cin >> UI;
-            if(UI == "IsEmpty")
+            if(UI == "isempty")
             {
                 if(Q[i].IsEmpty()) cout << "queue is empty.\n";
                 else cout << "queue is not empty.\n";
             }
-            else if(UI == "Push")
+            else if(UI == "push")
             {
                 char c; 
                 cin >> c;
                 Q[i].Push(c);
             }
-            else if(UI == "Pop")
+            else if(UI == "pop")
             {
-                cout << "Pop " << Q[i].Front() << endl;
+                cout << "Pop out" << Q[i].Front() << endl;
                 Q[i].Pop();
             }
-            else if(UI == "Front")
+            else if(UI == "front")
             {
                 cout << "The front is " << Q[i].Front() << endl;
             }
-            else if(UI == "Rear")
+            else if(UI == "rear")
             {
                 cout << "The rear is " << Q[i].Rear() << endl;
             }
-            else if(UI == "Size")
+            else if(UI == "size")
             {
                 cout << "The size is " << Q[i].Size() << endl;
             }
-            else if(UI == "Capacity")
+            else if(UI == "capacity")
             {
                 cout << "The capacity is " << Q[i].Capacity() << endl;
             }
-            else if(UI == "End")
+            else if(UI == "end")
             {
                 flag = false;
             }
