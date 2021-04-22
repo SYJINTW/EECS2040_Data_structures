@@ -1,5 +1,5 @@
-#ifndef FUNCTION_H
-#define FUNCTION_H
+#ifndef FUNCTION_HPP
+#define FUNCTION_HPP
 
 using namespace std;
 
@@ -231,4 +231,4 @@ void Queue<T>::Pop()
     Bag<T>::array[Bag<T>::bottom].~T(); // destructor for T
 }
 
-#endif // FUNCTION_H
+#endif // FUNCTION_HPP

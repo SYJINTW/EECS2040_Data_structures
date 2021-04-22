@@ -12,12 +12,13 @@ int main()
 {
     string S;
     int cap;
+    cout << "This is a Queue program." << endl;
     cout << "Set the initial capacity as: ";
     cin >> cap;
-    Stack<T_TYPE> A(cap); // for Stack and Deque
-    //Queue<T_TYPE> A(cap); // for Queue
+    Queue<T_TYPE> A(cap); // for Queue
 
     int flag = 1;
+    cout << "Command: push <element> / pop / size / show / quit" << endl;
     while (flag)
     {
         cout << ">> ";
@@ -28,21 +29,10 @@ int main()
             cin >> tmp;
             A.Push(tmp);
         }
-        else if (S == "push_front")
-        {
-            T_TYPE tmp;
-            cin >> tmp;
-            A.Bag<T_TYPE>::Push_front(tmp);
-        }
         else if (S == "pop")
         {
             cout << "pop out " << A.Element() << endl;
             A.Pop();
-        }
-        else if (S == "pop_first") // for Deque
-        {
-            cout << "pop out " << A.Bag<T_TYPE>::Element() << endl;
-            A.Bag<T_TYPE>::Pop();
         }
         else if (S == "size")
         {
@@ -52,14 +42,15 @@ int main()
         {
             flag = 0;
         }
-        else cout << "command wrong" << endl;
+        else
+            cout << "command wrong" << endl;
     }
-    
+
     cout << "The left element (first to last): ";
-    while(!A.IsEmpty())
+    while (!A.IsEmpty())
     {
         cout << A.Bag<T_TYPE>::Element() << " ";
-        A.Bag<T_TYPE>::Pop(); 
+        A.Bag<T_TYPE>::Pop();
     }
     cout << endl;
 
