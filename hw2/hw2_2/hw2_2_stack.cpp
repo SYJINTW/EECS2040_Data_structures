@@ -7,6 +7,7 @@
 using namespace std;
 
 #define T_TYPE char
+// #define T_TYPE float
 
 int main()
 {
@@ -18,7 +19,7 @@ int main()
     Stack<T_TYPE> A(cap); // for Stack and Deque
 
     int flag = 1;
-    cout << "Command: push <element> / pop / size / show / quit" << endl;
+    cout << "Command: push <element> / pop / size / quit" << endl;
     while (flag)
     {
         cout << ">> ";

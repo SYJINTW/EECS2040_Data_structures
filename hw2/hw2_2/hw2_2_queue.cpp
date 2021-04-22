@@ -6,7 +6,8 @@
 
 using namespace std;
 
-#define T_TYPE char
+// #define T_TYPE char
+#define T_TYPE float
 
 int main()
 {
