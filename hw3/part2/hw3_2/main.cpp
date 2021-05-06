@@ -7,18 +7,16 @@ int main()
 {
     Poly A;
     cin >> A;
+    Poly B;
+    cin >> B;
+    Poly C = A - B;
     cout << "A: " << A << endl;
-    cin >> A;
-    cout << "A: " << A << endl;
-    Poly B(A);
     cout << "B: " << B << endl;
-    Poly C;
-    C = A;
     cout << "C: " << C << endl;
-
-    cin >> A;
-    cout << "A: " << A << endl;
-    
-    C = A + B;
-    cout << " A + B: " << C << endl;
+    Poly D = A + B;
+    cout << "D: " << D << endl;
+    double x;
+    cin >> x;
+    double ans = C.Eval(x);
+    cout << "ans = " << ans << endl;
 }
