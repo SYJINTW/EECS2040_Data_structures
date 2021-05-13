@@ -34,6 +34,11 @@ class Chain
         friend ostream& operator<<(ostream& os, Chain<T>& C)
         {
             ChainNode<T>* now = C.first;
+            if(now == NULL)
+            {
+                os << "The list is empty.\n";
+                return os;
+            }
             now = now->link;
             os << "First";
             while(now != NULL)
