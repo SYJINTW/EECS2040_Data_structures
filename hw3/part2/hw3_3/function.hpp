@@ -176,42 +176,54 @@ void Matrix::addNode(Triple t)
 }
 
 // DONE: Reading in a sparse matrix and set up its link representation
-istream &operator>>(istream &is, Matrix &matrix)
-{
+istream& operator >>(istream& is, Matrix& matrix) {
     Triple s; // num of row / num of col / num of terms
-    is >> s.row >> s.col >> s.value;
+    cout << "Numbers of rows: ";
+    is >> s.row;
+    cout << "Numbers of cols: ";
+    is >> s.col;
+    cout << "Numbers of terms: ";
+    is >> s.value;
     int p = max(s.row, s.col);
-
     matrix.headnode = new MatrixNode(false, &s);
-
-    if (p == 0)
-    {
-        matrix.headnode->right = matrix.headnode;
+    if (p == 0) {
+        matrix.headnode -> right = matrix.headnode;
         return is;
     }
-
-    MatrixNode *now = matrix.headnode;
-    // create first headnode
-    MatrixNode *tmp = new MatrixNode(true, NULL);
-    now->right = tmp;
-    tmp->next = now;
-    now = now->right;
-    // create p-1 headnode
-    for (int i = 1; i < p; i++)
-    {
-        MatrixNode *tmp = new MatrixNode(true, NULL);
-        tmp->next = now->next;
-        now->next = tmp;
-    }
-
-    for (int i = 0; i < s.value; i++)
-    {
+    MatrixNode** head = new MatrixNode* [p];
+    for (int i = 0; i < p; i++) head[i] = new MatrixNode(true, 0);
+    matrix.headnode -> right = head[0];
+    int currentRow = 0;
+    MatrixNode* last = head[0];
+    for (int i = 0; i < s.value; i++) {
         Triple t;
+        cout << "Input the " << i+1 << "th terms ( row, col, value ): ";
         is >> t.row >> t.col >> t.value;
-        matrix.addNode(t);
+        if (t.row > currentRow) {
+            last -> right = head[currentRow];
+            currentRow = t.row;
+            last = head[currentRow];
+        }
+        last -> right = new MatrixNode(false, &t);
+        last = last -> right;
+        if (head[t.col] -> down == head[t.col]) {
+            head[t.col] -> next = last;
+            head[t.col] -> down = last;
+        } else {
+            head[t.col] -> next -> down = last;
+            head[t.col] -> next = last;
+        }
     }
+    last -> right = head[currentRow];
+    for (int i = 0; i < s.col; i++) {
+        if (head[i] -> down != head[i]) head[i] -> next -> down = head[i];
+    }
+    for (int i = 0; i < p - 1; i++) head[i] -> next = head[i + 1];
+    head[p - 1] -> next = matrix.headnode;
+    delete [] head;
     return is;
 }
+
 
 // DONE:
 ostream &operator<<(ostream &os, Matrix &matrix)
