@@ -62,12 +62,12 @@ Poly::GetNode()
 {
     if(av)
     {
-        cout << "Reuse av" << endl;
+        //cout << "Reuse av" << endl;
         Term* tmp = av;
         av = av->link;
         return tmp;
     }
-    cout << "Empty av" << endl;
+    //cout << "Empty av" << endl;
     return new Term();
 }
 
@@ -132,6 +132,7 @@ operator>>(istream &is, Poly &x)
     int e, num;
     cout << "How many element do you want to add: ";
     is >> num;
+    cout << "Input by this format \"coef exp\":\n";
     while(num--)
     {
         is >> c >> e;
