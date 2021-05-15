@@ -34,7 +34,7 @@ int main()
         Matrix F(A);
     auto end_time = std::chrono::high_resolution_clock::now();
     auto time = end_time - start_time;
-    cout << "Copy matrix 100000 times spend " << time/(std::chrono::milliseconds(1)) << " ms" << endl;
+    cout << "Copy matrix 1 times spend " << time/(std::chrono::milliseconds(1)) << "/100000 ms" << endl;
 
     return 0;
 }
