@@ -1,7 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <chrono>
-#include "function.hpp"
+#include "function_3.hpp"
 
 using namespace std;
 

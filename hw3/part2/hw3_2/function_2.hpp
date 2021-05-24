@@ -114,6 +114,7 @@ Poly::Poly(const Poly &a)
 // DONE:
 Poly::~Poly()
 {
+    /*
     Term* now = this->poly->link;
     while(now != this->poly)
     {
@@ -122,6 +123,17 @@ Poly::~Poly()
         RetNode(tmp);
     }
     delete this->poly;
+    */
+   Term *del;
+   Term *cur = poly->link;
+   while(cur != poly)
+   {
+       del = cur;
+       cur = cur->link;
+       RetNode(del);
+   }
+   poly->link = poly;
+   delete poly;
 }
 
 // DONE:
