@@ -84,7 +84,8 @@ int main()
     cout << endl;
 
     cout << "The data of root: ";
-    cout << t.RootData() << endl;
+    char ctmp = t.RootData();
+    cout << ctmp << endl;
 
     Tree<char> lt = t.LeftSubtree();
     Tree<char> rt = t.RightSubtree();
@@ -95,6 +96,13 @@ int main()
     rt.Inorder();
     cout << endl;
     cout << endl;
+
+    // combine the tree together
+    Tree<char> newt(lt, ctmp, rt);
+    cout << "The combine Tree (combine lt and '+' and rt): ";
+    newt.Inorder();
+    cout << endl;
+
 }
 
 // test input
