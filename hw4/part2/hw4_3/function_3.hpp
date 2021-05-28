@@ -1,5 +1,5 @@
-#ifndef FUNCTION_HPP
-#define FUNCTION_HPP
+#ifndef FUNCTION_3_HPP
+#define FUNCTION_3_HPP
 
 using namespace std;
 
@@ -337,4 +337,4 @@ BST<K,E>::Postorder(TreeNode<K,E>* currentNode)
 
 
 
-#endif // FUNCTION_HPP
+#endif // FUNCTION_3_HPP

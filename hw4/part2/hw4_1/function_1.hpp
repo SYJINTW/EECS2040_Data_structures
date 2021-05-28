@@ -1,5 +1,5 @@
-#ifndef FUNCTION_HPP
-#define FUNCTION_HPP
+#ifndef FUNCTION_1_HPP
+#define FUNCTION_1_HPP
 
 #include <iostream>
 #include <string>
@@ -390,4 +390,4 @@ Tree<T>::Equal(const TreeNode<T> *a, const TreeNode<T> *b) const
 
 
 
-#endif // FUNCTION_HPP
+#endif // FUNCTION_1_HPP

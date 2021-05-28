@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <queue>
 #include <stack>
-#include "function.hpp"
+#include "function_1.hpp"
 
 using namespace std;
 
@@ -100,5 +100,5 @@ int main()
 // test input
 /*
 textbook input: 
-A/B*C*D+E
+A-B*C*D+E
 */
