@@ -13,16 +13,20 @@ public:
     Graph(int k);
     ~Graph(){};
     void Setup();
-    // TODO:
+    // DONE:
     void Path(int n);
     // DONE:
     int Choose(int n);
     void ShortestPath(const int n, const int v);
     // DONE:
     int Vertex();
+    // DONE:
+    void BellmanFord(const int n, const int v);
+    // DONE:
+    void AllLength(const int n); // Floyd–Warshall algorithm
 private:
     int vertex, edge;
-    vector<vector<int>> length;
+    vector<vector<int>> length, a;
     vector<int> dist, s, p;
 };
 
@@ -151,7 +155,6 @@ Graph::ShortestPath(const int n, const int v)
         cout << endl;
     }
     */
-    cout << endl;
 }
 
 int
@@ -160,9 +163,68 @@ Graph::Vertex()
     return vertex;
 }
 
+void 
+Graph::BellmanFord(const int n, const int v)
+{
+    for(int i = 0; i < n; i++)
+        dist[i] = length[v][i]; // initialize
+    for(int k = 2; k <= n-1; k++)
+    {
+        for(int u = 0; u < n; u++)
+        {
+            if(u != v)
+            {
+                for(int i = 0; i < n; i++)
+                {
+                    if(length[i][u] == MAX) continue;
+                    if(dist[u] > dist[i] + length[i][u]) dist[u] = dist[i] + length[i][u];
+                }
+            }
+        }
+    }
+    // output length
+    for(int i = 0; i < vertex; i++)
+    {
+        cout << "[" << i << "]: ";
+        if(dist[i] == MAX)
+            cout <<  "Infinite" << endl;
+        else
+            cout << dist[i] << endl;
+    }
+}
+
+void
+Graph::AllLength(const int n)
+{
+    a = length;
+    for(int k = 0; k < n; k++)
+    {
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                if(a[i][k] == MAX || a[k][j] == MAX) continue;
+                if((a[i][k] + a[k][j]) < a[i][j]) a[i][j] = a[i][k] + a[k][j];
+            }
+        }
+    }
+
+    for(int i = 0; i < n; i++)
+    {
+        cout << "[" << i << "] ";
+        for(int j = 0; j < n; j++)
+        {
+            if(a[i][j] == MAX) cout << setw(4) << "X";
+            else cout << setw(4) << a[i][j];
+        }
+        cout << endl;
+    }
+}
 
 int main()
 {
+    /*
+    // (a)
     Graph G1(8);
     G1.Setup();
     G1.ShortestPath(8, 4);
@@ -174,4 +236,22 @@ int main()
     Graph G3(6);
     G3.Setup();
     G3.ShortestPath(6, 0);
+    
+    // (b)
+    Graph G4(7);
+    G4.Setup();
+    G4.BellmanFord(7, 0);
+
+    Graph G5(3);
+    G5.Setup();
+    G5.BellmanFord(3, 0);
+    */
+    // (c)
+    Graph G6(3);
+    G6.Setup();
+    G6.AllLength(3);
+
+    Graph G7(3);
+    G7.Setup();
+    G7.AllLength(3);
 }
