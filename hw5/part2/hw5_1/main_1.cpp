@@ -51,7 +51,7 @@ void
 Graph::Setup()
 {
     int edge, type, u, v;
-    cout << "How many edges: ";
+    //cout << "How many edges: ";
     cin >> edge;
     if(edge <= 0)
     {
@@ -211,6 +211,7 @@ int main()
     g1.Components();
     cout << "g1's dfn & low: " << endl;
     g1.DfnLow(3);
+    cout << endl;
 
     g2.Setup();
     // BFS
@@ -232,6 +233,7 @@ int main()
     g2.Components();
     cout << "g2's dfn & low: " << endl;
     g2.DfnLow(3);
+    cout << endl;
 
     g3.Setup();
     // BFS
@@ -253,5 +255,6 @@ int main()
     g3.Components();
     cout << "g3's dfn & low: " << endl;
     g3.DfnLow(3);
+    cout << endl;
 }
 

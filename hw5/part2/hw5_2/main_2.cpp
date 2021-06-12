@@ -123,6 +123,20 @@ Graph::ShortestPath(const int n, const int v)
     p[v] = -1;
     int preVertex = v;
 
+    // print process
+    cout << "     ";
+    for(int h = 0; h < n; h++)
+        cout << "  [" << h << "]";
+    cout << endl;
+    cout << "0" << "  --";
+    for(int h = 0; h < n; h++)
+    {
+        if(dist[h] == MAX) cout << setw(5) << 'X';
+        else cout << setw(5) << dist[h];
+    }
+    cout << endl;
+    // end of print process
+
     for(int i = 0; i < n-2; i++)
     {
         int u = Choose(n);
@@ -138,7 +152,20 @@ Graph::ShortestPath(const int n, const int v)
                 p[w] = preVertex;
             }
         } // end of for(int w = 0; ...)
+
+        // print process
+        cout << i+1 << setw(4) << u;
+        for(int h = 0; h < n; h++)
+        {
+            if(dist[h] == MAX) cout << setw(5) << 'X';
+            else cout << setw(5) << dist[h];
+        }
+        cout << endl;
+        // end of print process
+
     } // end of for(int i = 0; ...)
+    
+    
     for(int i = 0; i < vertex; i++)
     {
         cout << "[" << i << "]: ";
@@ -168,6 +195,23 @@ Graph::BellmanFord(const int n, const int v)
 {
     for(int i = 0; i < n; i++)
         dist[i] = length[v][i]; // initialize
+    
+    // print process
+    cout << "    ";
+    for(int h = 0; h < n; h++)
+    {
+        cout << " [" << h << "]";
+    }
+    cout << endl;
+    cout << "(" << "0" << "):";
+    for(int h = 0; h < n; h++)
+    {
+        if(dist[h] == MAX) cout << setw(4) << 'X'; 
+        else cout << setw(4) << dist[h];
+    }
+    cout << endl;
+    // end of print process 
+
     for(int k = 2; k <= n-1; k++)
     {
         for(int u = 0; u < n; u++)
@@ -181,7 +225,30 @@ Graph::BellmanFord(const int n, const int v)
                 }
             }
         }
+
+        // print process
+        cout << "(" << k-1 << "):";
+        for(int h = 0; h < n; h++)
+        {
+            if(dist[h] == MAX) cout << setw(4) << 'X'; 
+            else cout << setw(4) << dist[h];
+        }
+        cout << endl;
+        // end of print process
+
     }
+
+    // print process
+    cout << "(" << n-1 << "):";
+    for(int h = 0; h < n; h++)
+    {
+        if(dist[h] == MAX) cout << setw(4) << 'X'; 
+        else cout << setw(4) << dist[h];
+    }
+    cout << endl;
+    // end of print process
+
+    /*
     // output length
     for(int i = 0; i < vertex; i++)
     {
@@ -191,24 +258,17 @@ Graph::BellmanFord(const int n, const int v)
         else
             cout << dist[i] << endl;
     }
+    */
+
 }
 
 void
 Graph::AllLength(const int n)
 {
     a = length;
-    for(int k = 0; k < n; k++)
-    {
-        for(int i = 0; i < n; i++)
-        {
-            for(int j = 0; j < n; j++)
-            {
-                if(a[i][k] == MAX || a[k][j] == MAX) continue;
-                if((a[i][k] + a[k][j]) < a[i][j]) a[i][j] = a[i][k] + a[k][j];
-            }
-        }
-    }
 
+    // print process
+    cout << "Process 0" << endl;
     for(int i = 0; i < n; i++)
     {
         cout << "[" << i << "] ";
@@ -219,39 +279,69 @@ Graph::AllLength(const int n)
         }
         cout << endl;
     }
+    // end print process
+
+
+    for(int k = 0; k < n; k++)
+    {
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                if(a[i][k] == MAX || a[k][j] == MAX) continue;
+                if((a[i][k] + a[k][j]) < a[i][j]) a[i][j] = a[i][k] + a[k][j];
+            }
+        }
+        // print process
+        cout << "Process "<< k+1 << endl;
+        for(int i = 0; i < n; i++)
+        {
+            cout << "[" << i << "] ";
+            for(int j = 0; j < n; j++)
+            {
+                if(a[i][j] == MAX) cout << setw(4) << "X";
+                else cout << setw(4) << a[i][j];
+            }
+            cout << endl;
+        }
+        // end print process
+    }
 }
 
 int main()
 {
-    /*
     // (a)
+    cout << "Part a" << endl;
     Graph G1(8);
     G1.Setup();
     G1.ShortestPath(8, 4);
-
+    cout << endl;
     Graph G2(6);
     G2.Setup();
     G2.ShortestPath(6, 0);
-
+    cout << endl;
     Graph G3(6);
     G3.Setup();
     G3.ShortestPath(6, 0);
-    
+    cout << endl;    
     // (b)
+    cout << "Part b" << endl; 
     Graph G4(7);
     G4.Setup();
     G4.BellmanFord(7, 0);
-
+    cout << endl; 
     Graph G5(3);
     G5.Setup();
     G5.BellmanFord(3, 0);
-    */
+    cout << endl; 
     // (c)
+    cout << "Part c" << endl;
     Graph G6(3);
     G6.Setup();
     G6.AllLength(3);
-
-    Graph G7(3);
+    cout << endl;
+    Graph G7(7);
     G7.Setup();
-    G7.AllLength(3);
+    G7.AllLength(7);
+    cout << endl;
 }
