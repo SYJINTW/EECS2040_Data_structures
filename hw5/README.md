@@ -1,8 +1,8 @@
 
 # Data Sturcture Homework 5
 
-Just homework.
-If you want to use my homework, please give me a star, then you can use it for free.
+Just homework.  
+If you want to use my homework, please give me a star, then you can use it for free.  
 
 ## Run Locally
 
@@ -77,7 +77,7 @@ To run tests, run the following command
 
 #### Can't compile hw5_2 on Windows
 
-Way 1: try to use `g++ -std=c++17` to compile.
+Way 1: try to use `g++ -std=c++17` to compile.  
 Way 2: Delete the line 42 to 45 and add the code below to line 42
 ```c++
 vector<int> tmp0(vertex, 0);
