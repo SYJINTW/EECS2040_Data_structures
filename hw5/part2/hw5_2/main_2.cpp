@@ -87,6 +87,7 @@ Graph::Path(int n)
             if(tmp == MAX)
             {
                 haveInf = true;
+                break;
             }
             path.push_back(p[tmp]);
             tmp = p[tmp];
@@ -237,29 +238,6 @@ Graph::BellmanFord(const int n, const int v)
         // end of print process
 
     }
-
-    // print process
-    cout << "(" << n-1 << "):";
-    for(int h = 0; h < n; h++)
-    {
-        if(dist[h] == MAX) cout << setw(4) << 'X'; 
-        else cout << setw(4) << dist[h];
-    }
-    cout << endl;
-    // end of print process
-
-    /*
-    // output length
-    for(int i = 0; i < vertex; i++)
-    {
-        cout << "[" << i << "]: ";
-        if(dist[i] == MAX)
-            cout <<  "Infinite" << endl;
-        else
-            cout << dist[i] << endl;
-    }
-    */
-
 }
 
 void
