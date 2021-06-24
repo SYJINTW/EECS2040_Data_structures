@@ -118,7 +118,8 @@ template <class T>
 int ListMerge(T *a, int *link, const int start1, const int start2)
 {
     int iResult = 0;
-    for(int i1 = start1, i2 = start2; i1 && i2;)
+    int i1, i2;
+    for(i1 = start1, i2 = start2; i1 && i2;)
     {
         if(a[i1] <= a[i2])
         {
@@ -130,12 +131,12 @@ int ListMerge(T *a, int *link, const int start1, const int start2)
         {
             link[iResult] = i2;
             iResult = i2;
-            i2 = link[i1];
-        }
-        if(i1 == 0) link[iResult] = i2;
-        else link[iResult] = i1;
-        return link[0];
+            i2 = link[i2];
+        }       
     }
+    if(i1 == 0) link[iResult] = i2;
+    else link[iResult] = i1;
+    return link[0];
 }
 
 template <class T>
@@ -144,6 +145,18 @@ int rMergeSort(T *a, int *link, const int left, const int right)
     if(left >= right) return left;
     int mid = (left + right)/2;
     return ListMerge(a, link, rMergeSort(a, link, left, mid), rMergeSort(a, link, mid+1, right));
+}
+
+template <class T>
+void PrintRMergeSort(T *a, int *link)
+{
+    int n = link[0];
+    while(n)
+    {
+        cout << a[n] << " "; 
+        n = link[n];
+    }
+    cout << endl;  
 }
 
 // heap sort
@@ -196,6 +209,14 @@ void printArray(T *arr)
     cout << endl; 
 }
 
+void Index(int *arr)
+{
+    for(int i = 0; i < ARRAYSIZE; i++)
+    {
+        arr[i] = 0;
+    }
+}
+
 
 int main()
 {
@@ -207,6 +228,7 @@ int main()
     char tmpcharArray[ARRAYSIZE];
     string stringArray[ARRAYSIZE];
     string tmpstringArray[ARRAYSIZE];
+    int indexArray[ARRAYSIZE];
     
     // create random array
     for(int i = 1; i <= s; i++)
@@ -234,6 +256,9 @@ int main()
 
     // sort array
     // int
+    cout << "Original: ";
+    printArray(intArray);
+
     copyArray(tmpintArray, intArray);
     InsertionSort(tmpintArray, s);
     cout << "InsertionSort: ";
@@ -248,6 +273,12 @@ int main()
     MergeSort(tmpintArray, s);
     cout << "MergeSort: ";
     printArray(tmpintArray);
+
+    copyArray(tmpintArray, intArray);
+    Index(indexArray);
+    rMergeSort(tmpintArray, indexArray, 1, s);
+    cout << "rMergeSort: ";
+    PrintRMergeSort(tmpintArray, indexArray);
     
     copyArray(tmpintArray, intArray);
     HeapSort(tmpintArray, s);
@@ -257,6 +288,9 @@ int main()
     cout << endl;
 
     // float
+    cout << "Original: ";
+    printArray(floatArray);
+
     copyArray(tmpfloatArray, floatArray);
     InsertionSort(tmpfloatArray, s);
     cout << "InsertionSort: ";
@@ -273,6 +307,12 @@ int main()
     printArray(tmpfloatArray);
 
     copyArray(tmpfloatArray, floatArray);
+    Index(indexArray);
+    rMergeSort(tmpfloatArray, indexArray, 1, s);
+    cout << "rMergeSort: ";
+    PrintRMergeSort(tmpfloatArray, indexArray);
+
+    copyArray(tmpfloatArray, floatArray);
     HeapSort(tmpfloatArray, s);
     cout << "HeapSort: ";
     printArray(tmpfloatArray);
@@ -280,6 +320,9 @@ int main()
     cout << endl;
 
     // char
+    cout << "Original: ";
+    printArray(charArray);
+
     copyArray(tmpcharArray, charArray);
     cout << "InsertionSort: ";
     InsertionSort(tmpcharArray, s);
@@ -296,6 +339,12 @@ int main()
     printArray(tmpcharArray);
 
     copyArray(tmpcharArray, charArray);
+    Index(indexArray);
+    rMergeSort(tmpcharArray, indexArray, 1, s);
+    cout << "rMergeSort: ";
+    PrintRMergeSort(tmpcharArray, indexArray);
+
+    copyArray(tmpcharArray, charArray);
     HeapSort(tmpcharArray, s);
     cout << "HeapSort: ";
     printArray(tmpcharArray);
@@ -303,6 +352,9 @@ int main()
     cout << endl;
 
     // string
+    cout << "Original: ";
+    printArray(stringArray);
+
     copyArray(tmpstringArray, stringArray);
     cout << "InsertionSort: ";
     InsertionSort(tmpstringArray, s);
@@ -317,6 +369,12 @@ int main()
     MergeSort(tmpstringArray, s);
     cout << "MergeSort: ";
     printArray(tmpstringArray);
+
+    copyArray(tmpstringArray, stringArray);
+    Index(indexArray);
+    rMergeSort(tmpstringArray, indexArray, 1, s);
+    cout << "rMergeSort: ";
+    PrintRMergeSort(tmpstringArray, indexArray);
 
     copyArray(tmpstringArray, stringArray);
     HeapSort(tmpstringArray, s);
