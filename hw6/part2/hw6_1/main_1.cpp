@@ -2,7 +2,7 @@
 // DONE: insertion sort
 // DONE: median-of-three quick sort
 // DONE: iterative merge sort
-// TODO: recursive merge sort
+// DONE: recursive merge sort
 // DONE: heap sort
 
 #include <iostream>
@@ -245,7 +245,7 @@ int main()
 
     for(int i = 1; i <= s; i++)
     {
-        int n = rand() % 7; // limit one string less than 7 char
+        int n = rand() % 7 + 1; // limit one string less than 7 char
         string tmp = "";
         for(int i = 0; i < n; i++)
         {
