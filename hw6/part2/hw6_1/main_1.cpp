@@ -220,6 +220,8 @@ void Index(int *arr)
 
 int main()
 {
+    int seed = (unsigned)time(NULL); 
+    srand(seed);
     int intArray[ARRAYSIZE];
     int tmpintArray[ARRAYSIZE];
     float floatArray[ARRAYSIZE];
